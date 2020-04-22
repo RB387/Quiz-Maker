@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row" style="margin-top: 10%; margin-left: 15%; margin-right: 15%">
+            <div class="col-12">
+                <form method = "POST">
+                    {% csrf_token %}
+                    <ul class="list-group">
+                    {% for answer in form.answers %}
+                        <li class="list-group-item">
+                            {{ answer }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <input type="submit" value="Send" class="btn btn-large btn-block btn-warning" style="margin-top: 5%">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

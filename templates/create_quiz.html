@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div id="quiz"></div>
+    <div class="input-group" style="margin-top: 32px;">
+        <select class="custom-select" id="questionSelector">
+            <option value="0">Text Question</option>
+            <option value="1">Choice Question</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="page.add_question()">Add question</button>
+        </div>
+    </div>
+    <div class="input-group" style="margin-top: 32px;">
+        <button class="btn btn-primary" style="width: 100%" onclick="page.post_data({% url 'add_quiz' %})">Save quiz</button>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card" style="margin-top: 32px">
+      <div class="card-header">
+        Welcome!
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Quiz Maker</h5>
+        <p class="card-text">Easy way to create your quiz online!</p>
+        <a href="{% if user.is_authenticated %}
+                    {% url 'add_quiz' %}
+                 {% else %}
+                    {% url 'login' %}
+                 {% endif %}" class="btn btn-primary">Let's try!</a>
+      </div>
+    </div>
+</div>
+{% endblock %}
