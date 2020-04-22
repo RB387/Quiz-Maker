@@ -10,6 +10,7 @@ class NewQuiz{
         let answer = document.getElementById(`answer-${idx}`).value
         this.quiz[idx]['question'] = question
         this.quiz[idx]['answer'] = answer
+        document.getElementById(`save-${idx}`).innerText = ""
     }
 
     save_choice_question(idx){
@@ -21,10 +22,15 @@ class NewQuiz{
                 this.quiz[idx]['question'] = question
                 for(let j=0; j<this.quiz[idx]['choices'].length; j++) {
                     this.quiz[idx]['choices'][j] = document.getElementById(`${idx}-${j}`).value
+                    document.getElementById(`save-${idx}`).innerText = ""
                 }
                 return
             }
         }
+    }
+
+    change_status(idx){
+        document.getElementById(`save-${idx}`).innerText = "(NOT SAVED)"
     }
 
     add_option(idx){
@@ -32,10 +38,10 @@ class NewQuiz{
                               <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">${this.quiz[idx]['choices'].length + 1}</span>
                               </div>
-                              <input type="text" id="${idx}-${this.quiz[idx]['choices'].length}" class="form-control" placeholder="Enter your option" aria-describedby="basic-addon1">
+                              <input type="text" id="${idx}-${this.quiz[idx]['choices'].length}" class="form-control" placeholder="Enter your option" aria-describedby="basic-addon1" onchange="page.change_status(${idx})">
                               <div class="input-group-append">
                                   <div class="input-group-text">
-                                    <input type="radio" name="answer-${idx}" class="" aria-label="Correct answer" value="${this.quiz[idx]['choices'].length}">
+                                    <input type="radio" name="answer-${idx}" class="" aria-label="Correct answer" value="${this.quiz[idx]['choices'].length}" onchange="page.change_status(${idx})">
                                   </div>
                               </div>
                         </div>`
@@ -47,23 +53,23 @@ class NewQuiz{
 
     generate_text_question(){
         return `<div class="card" style="margin-top: 32px">
-                    <div class="card-header">Question ${this.question_count + 1}</div>
+                    <div class="card-header">Question ${this.question_count + 1} <span id="save-${this.question_count}">(NOT SAVED)</span></div>
                     <div class="card-body">
-                        <textarea class="form-control" rows="5" id="question-${this.question_count}" placeholder="Enter your question"></textarea>
-                        <input type='text' id="answer-${this.question_count}" placeholder="Enter right answer for the question" class="form-control question-input">
-                        <button class="btn btn-primary" onclick=page.save_text_question(${this.question_count})>Save</button>
+                        <textarea class="form-control" rows="5" id="question-${this.question_count}" placeholder="Enter your question" onchange="page.change_status(${this.question_count})"></textarea>
+                        <input type='text' id="answer-${this.question_count}" placeholder="Enter right answer for the question" class="form-control question-input" onchange="page.change_status(${this.question_count})">
+                        <button class="btn btn-primary" onclick="page.save_text_question(${this.question_count})">Save</button>
                     </div>
                 </div>`
     }
 
     generate_choice_question(){
         return `<div class="card" style="margin-top: 32px">
-                    <div class="card-header">Question ${this.question_count + 1}</div>
+                    <div class="card-header">Question ${this.question_count + 1} <span id="save-${this.question_count}">(NOT SAVED)</span></div>
                     <div class="card-body">
-                        <textarea class="form-control question-input" rows="5" id="question-${this.question_count}" placeholder="Enter your question"></textarea>
+                        <textarea class="form-control question-input" rows="5" id="question-${this.question_count}" placeholder="Enter your question" onchange="page.change_status(${this.question_count})"></textarea>
                         <div id="options-${this.question_count}"></div>
-                        <button class="btn btn-primary" onclick=page.add_option(${this.question_count})>Add Option</button>
-                        <button href="#" class="btn btn-primary" onclick=page.save_choice_question(${this.question_count})>Save</button>
+                        <button class="btn btn-primary" onclick="page.add_option(${this.question_count})">Add Option</button>
+                        <button class="btn btn-primary" onclick="page.save_choice_question(${this.question_count})">Save</button>
                     </div>
                 </div>`
     }
