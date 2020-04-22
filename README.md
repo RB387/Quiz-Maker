@@ -1,15 +1,15 @@
 # Quiz-Maker
 ## Progress
-* + Models (probably will be redisigned, 50%)
-* + User auth (only log in, not tested, 30%)
-* + Quiz creation page (main functions were added, 90%)
-* + Home Page (idk what to do with it, so 100%)
+* Models (probably will be redisigned, 50%)
+* User auth (only log in, not tested, 30%)
+* Quiz creation page (main functions were added, 90%)
+* Home Page (idk what to do with it, so 100%)
 
 ## TO DO:
-* - Complete quizes view
-* - Sign up view
-* - Stats view
-* - User page view
+- Complete quizes view
+- Sign up view
+- Stats view
+- User page view
 
 Screenshots:
 ## HomePage
