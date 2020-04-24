@@ -9,7 +9,7 @@ class NewQuiz{
         let question = document.getElementById(`question-${idx}`).value
         let answer = document.getElementById(`answer-${idx}`).value
         this.quiz[idx]['question'] = question
-        this.quiz[idx]['answer'] = answer
+        this.quiz[idx]['answer'] = answer.toString(10)
         document.getElementById(`save-${idx}`).innerText = ""
     }
 
@@ -18,7 +18,7 @@ class NewQuiz{
         let answer = document.getElementsByName(`answer-${idx}`)
         for(let i = 0; i<answer.length; i++){
             if (answer[i].checked) {
-                this.quiz[idx]['answer'] = i
+                this.quiz[idx]['answer'] = i.toString(10)
                 this.quiz[idx]['question'] = question
                 for(let j=0; j<this.quiz[idx]['choices'].length; j++) {
                     this.quiz[idx]['choices'][j] = document.getElementById(`${idx}-${j}`).value
@@ -57,7 +57,7 @@ class NewQuiz{
                     <div class="card-body">
                         <textarea class="form-control" rows="5" id="question-${this.question_count}" placeholder="Enter your question" onchange="page.change_status(${this.question_count})"></textarea>
                         <input type='text' id="answer-${this.question_count}" placeholder="Enter right answer for the question" class="form-control question-input" onchange="page.change_status(${this.question_count})">
-                        <button class="btn btn-primary" onclick="page.save_text_question(${this.question_count})">Save</button>
+                        <button type="button" class="btn btn-primary" onclick="page.save_text_question(${this.question_count})">Save</button>
                     </div>
                 </div>`
     }
@@ -78,11 +78,11 @@ class NewQuiz{
         let selected_option = document.getElementById("questionSelector")
         let question_HTML = document.createElement('div')
         if (selected_option.value == 0){
-            this.quiz[this.question_count] = {'type': 0}
+            this.quiz[this.question_count] = {'type': '0'}
             question_HTML.innerHTML = this.generate_text_question()
             this.question_count++;
         } else if (selected_option.value == 1){
-            this.quiz[this.question_count] = {'type': 1, 'choices': []}
+            this.quiz[this.question_count] = {'type': '1', 'choices': []}
             question_HTML.innerHTML = this.generate_choice_question()
             this.question_count++;
         }
@@ -90,16 +90,19 @@ class NewQuiz{
     }
 
     post_data(url){
-      $.ajax({
-        url: `${url}`,
-        type: 'POST',
-        data: JSON.stringify(this.quiz),
-        async: true,
-        cache: false,
-        contentType: false,
-        processData: false,
-      });// end of $.ajax
-      return false;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(this.quiz),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (url) {
+               window.location.replace(url.url);
+            },
+            error: function (response) {
+               alert(response.responseJSON.message);
+            }
+        });
     }
 }
 

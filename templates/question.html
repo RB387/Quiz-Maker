@@ -2,20 +2,28 @@
 
 {% block content %}
     <div class="container">
-        <div class="row" style="margin-top: 10%; margin-left: 15%; margin-right: 15%">
+     <form method = "POST">
+    {% for form in forms %}
+        <div class="row" style="margin-top: 5%; margin-left: 15%; margin-right: 15%">
             <div class="col-12">
-                <form method = "POST">
-                    {% csrf_token %}
-                    <ul class="list-group">
+                {% csrf_token %}
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-secondary">
+                        <span><b>{{ form.question }}</b></span>
+                    </li>
+
                     {% for answer in form.answers %}
                         <li class="list-group-item">
                             {{ answer }}
                         </li>
                     {% endfor %}
-                    </ul>
-                    <input type="submit" value="Send" class="btn btn-large btn-block btn-warning" style="margin-top: 5%">
-                </form>
+                </ul>
             </div>
         </div>
+    {% endfor %}
+     <div class="row" style="margin-top: 5%; margin-left: 15%; margin-right: 15%">
+        <input type="submit" value="Send" class="btn btn-large btn-block btn-warning" style="margin-top: 5%">
+     </div>
+     </form>
     </div>
 {% endblock content %}

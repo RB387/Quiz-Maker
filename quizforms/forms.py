@@ -1,6 +1,12 @@
 from django import forms
+from .models import QuestionType
 
 class QuizForm(forms.Form):
-    def __init__(self, questions, *args, **kwargs):
+    def __init__(self, question, answer, q_type, choices, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['answers'] = forms.ChoiceField(choices=questions, widget=forms.RadioSelect)
+        if q_type == QuestionType.CHOICE.value:
+            self.fields['answers'] = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
+        elif q_type == QuestionType.TEXT.value:
+            self.fields['answers'] = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+        self.answer = answer
+        self.question = question
